@@ -22,12 +22,18 @@ File format:
 * CLI `emqx_ctl pem_cache clean` to force purge x509 certificate cache,
   to force an immediate reload of all certificates after the files are updated on disk.
 * Refactor the ExProto so that anonymous clients can also be displayed on the dashboard [#6983]
-* Force shutdown of processe that cannot answer takeover event [#7026]
+* Force shutdown of processes that cannot answer takeover event [#7026]
 * `topic` parameter in bridge configuration can have `${node}` substitution (just like in `clientid` parameter)
 * Add UTF-8 string validity check in `strict_mode` for MQTT packet.
   When set to true, invalid UTF-8 strings will cause the client to be disconnected. i.e. client ID, topic name. [#7261]
 * Changed systemd service restart delay from 10 seconds to 60 seconds.
+* MQTT-SN gateway supports initiative to synchronize registered topics after session resumed. [#7300]
 * Add load control app for future development.
+* Change the precision of float to 17 digits after the decimal point when formatting a
+  float using payload templates of rule actions. The old precision is 10 digits before
+  this change. [#7336]
+* Return the cached resource status when querying a resource using HTTP APIs.
+  This is to avoid blocking the HTTP request if the resource is unavailable. [#7374]
 
 ### Bug fixes
 
@@ -43,6 +49,10 @@ File format:
 * Fix false alert level log “cannot_find_plugins” caused by duplicate plugin names in `loaded_plugins` files.
 * Prompt user how to change the dashboard's initial default password when emqx start.
 * Fix errno=13 'Permission denied' Cannot create FIFO boot error in Amazon Linux 2022 (el8 package)
+* Fix user or appid created, name only allow `^[A-Za-z]+[A-Za-z0-9-_]*$`
+* Fix subscribe http api crash by bad_qos `/mqtt/subscribe`,`/mqtt/subscribe_batch`.
+* Send DISCONNECT packet with reason code 0x98 if connection has been kicked [#7309]
+* Auto subscribe to an empty topic will be simply ignored now
 
 ## v4.3.12
 ### Important changes
