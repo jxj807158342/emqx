@@ -5,12 +5,14 @@
     %% NOTE: this depends on the fact that emqx_dashboard is always
     %% the last application gets upgraded
     [ {apply, {emqx_rule_engine, load_providers, []}}
+    , {load_module,emqx_dashboard_admin,brutal_purge,soft_purge,[]}
     , {restart_application, emqx_dashboard}
     , {apply, {emqx_plugins, load, []}}
     ]}
  ],
  [ {<<".*">>,
     [ {apply, {emqx_rule_engine, load_providers, []}}
+    , {load_module,emqx_dashboard_admin,brutal_purge,soft_purge,[]}
     , {restart_application, emqx_dashboard}
     , {apply, {emqx_plugins, load, []}}
     ]}
